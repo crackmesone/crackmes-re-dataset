@@ -66,6 +66,7 @@ obfuscation_classes    # normalized high-level classes (16-term vocabulary)
 antidebug_methods      # specific anti-debug techniques
 packers                # specific packer names (UPX, FSG, ASPack, ...)
 controlflow_methods    # specific control-flow techniques
+antidisasm_methods     # specific anti-disassembly techniques
 raw_obfuscation_tags   # original free-text tags (pre-normalization)
 label_confidence       # low | medium | high (model self-report)
 evidence               # short text justification

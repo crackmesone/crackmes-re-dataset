@@ -10,7 +10,7 @@ raw_obfuscation_tags   free-text tags the model wrote      (4,654 distinct strin
 obfuscation_classes    16 high-level classes               (below)
       │  subclassify.py     (regex → specific techniques)
       ▼
-antidebug_methods / packers / controlflow_methods   specific sub-labels
+antidebug_methods / packers / controlflow_methods / antidisasm_methods   specific sub-labels
 ```
 
 The exact mapping rules are regexes in `pipeline/normalize_tags.py` (classes) and
@@ -67,6 +67,11 @@ PELock (1), CodeVirtualizer (1), Dotfuscator (1)
 **`controlflow_methods` (6)** — Spaghetti/junk-branch (40), Exception/interrupt-based (29),
 Indirect/computed jumps & calls (23), State machine/dispatcher (21), Control-flow flattening CFF (16),
 Return-address/stack-based (14)
+
+**`antidisasm_methods` (5)** — Junk/garbage bytes (87), Opaque predicates (18),
+Malformed PE / bad bytes UD2 (12), Overlapping/misaligned instructions (8),
+Jump-based desync (7); 20 crackmes have a generic anti-disassembly tag with no
+specific mechanism.
 
 ---
 

@@ -76,9 +76,18 @@ CONTROLFLOW = [
     ("Spaghetti / junk-branch",         r"spaghetti|junk.*(branch|jump)|always[-\s]?taken|opaque"),
 ]
 
+ANTIDISASM = [
+    ("Junk / garbage bytes",              r"junk|garbage|decoy byte|spurious|bogus|rz sequence"),
+    ("Opaque predicates",                 r"opaque"),
+    ("Jump-based desync",                 r"(jump|jmp|jnz|jz|je|jne).*(garbage|invalid|over|desync)|desynchroniz|short over"),
+    ("Overlapping / misaligned instructions", r"overlap|misalign|nanomite"),
+    ("Malformed PE / bad bytes (UD2)",    r"malformed pe|\bud2\b|bad byte|corrupt.*header|ida[-\s]?unfriendly"),
+]
+
 ADC = [(n, re.compile(p, re.I)) for n, p in ANTIDEBUG]
 PKC = [(n, re.compile(p, re.I)) for n, p in PACKERS]
 CFC = [(n, re.compile(p, re.I)) for n, p in CONTROLFLOW]
+ADIS = [(n, re.compile(p, re.I)) for n, p in ANTIDISASM]
 
 
 def match_all(tags, compiled):
@@ -95,16 +104,19 @@ def main():
     ad_dist = collections.Counter()
     pk_dist = collections.Counter()
     cf_dist = collections.Counter()
-    ad_generic = pk_generic = cf_generic = 0
+    ax_dist = collections.Counter()
+    ad_generic = pk_generic = cf_generic = ax_generic = 0
     for r in rows:
         tags = r.get("obfuscation") or []
         classes = r.get("obfuscation_classes") or []
         adm = match_all(tags, ADC)
         pks = match_all(tags, PKC)
         cfm = match_all(tags, CFC)
+        axm = match_all(tags, ADIS)
         r["antidebug_methods"] = adm
         r["packers"] = pks
         r["controlflow_methods"] = cfm
+        r["antidisasm_methods"] = axm
         if "Anti-debugging" in classes:
             for m in adm:
                 ad_dist[m] += 1
@@ -120,6 +132,11 @@ def main():
                 cf_dist[m] += 1
             if not cfm:
                 cf_generic += 1
+        if "Anti-disassembly" in classes:
+            for m in axm:
+                ax_dist[m] += 1
+            if not axm:
+                ax_generic += 1
 
     with open(OUT, "w") as f:
         for r in rows:
@@ -145,6 +162,13 @@ def main():
         if cf_dist[m]:
             print(f"  {m:42} {cf_dist[m]:4}")
     print(f"  {'(generic obfuscated control flow, no mechanism)':42} {cf_generic:4}")
+
+    ax_total = sum(1 for r in rows if "Anti-disassembly" in (r.get("obfuscation_classes") or []))
+    print(f"\n=== ANTI-DISASSEMBLY methods (of {ax_total} crackmes) ===")
+    for m, _ in ANTIDISASM:
+        if ax_dist[m]:
+            print(f"  {m:42} {ax_dist[m]:4}")
+    print(f"  {'(generic anti-disassembly, no mechanism)':42} {ax_generic:4}")
 
 
 if __name__ == "__main__":
