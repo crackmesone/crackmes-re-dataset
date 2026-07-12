@@ -1,0 +1,26 @@
+# secrets — never commit
+key.txt
+*.key
+.env
+
+# raw dump, binaries, solution archives (shipped separately)
+crackme/
+solution/
+database/
+*.zip
+binaries/
+
+# pipeline intermediates (reproducible from scripts)
+corpus.jsonl
+corpus_stats.json
+batch_requests.jsonl
+batch_job.json
+phase2_batch_job.json
+results.jsonl
+*_ids.json
+recovered.json
+
+# misc
+__pycache__/
+*.pyc
+.DS_Store
