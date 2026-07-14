@@ -31,7 +31,6 @@ CLASSES = [
     ("Crypto / hash algorithm",   r"\bmd5\b|sha-?\d|sha256|sha1|crc-?32|\baes\b|\btea\b|xtea|blowfish|\bdes\b|\brsa\b|hashing|hash function"),
     ("Import / API obfuscation",  r"import\s*(resolution|obfusc|hash|table)|getprocaddress|loadlibrary|api\s*hash|dynamic import|iat\b|runtime import"),
     ("Nag / trial",               r"\bnag\b|trial|time.?limit|expire"),
-    ("Anti-static analysis",      r"anti[-\s]?static|static analysis"),
     ("Custom / generic obfuscation", r"custom obfusc|code obfusc|obfuscator|obfuscated code|heavy obfusc|generic obfusc"),
 ]
 

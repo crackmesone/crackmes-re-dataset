@@ -7,7 +7,7 @@ in two levels:
 raw_obfuscation_tags   free-text tags the model wrote      (4,654 distinct strings)
       │  normalize_tags.py  (regex → controlled vocabulary)
       ▼
-obfuscation_classes    14 high-level classes               (below)
+obfuscation_classes    13 high-level classes               (below)
       │  subclassify.py     (regex → specific techniques)
       ▼
 antidebug_methods / packers / controlflow_methods / antidisasm_methods /
@@ -28,7 +28,7 @@ API cost. Counts below = crackmes carrying that tag (of 4,598).
 > crackme's exception tags are routed to **Anti-debugging** and/or **Control-flow
 > obfuscation** based on wording.
 
-## Obfuscation classes (14)
+## Obfuscation classes (13)
 
 | Class | Crackmes | What it covers |
 |---|---:|---|
@@ -45,7 +45,6 @@ API cost. Counts below = crackmes carrying that tag (of 4,598).
 | Custom / generic obfuscation | 73 | bespoke/unspecified "obfuscated" with no named mechanism |
 | Anti-VM / sandbox | 22 | VM/sandbox detection |
 | Nag / trial | 12 | nag screens, trial/time limits |
-| Anti-static analysis | 5 | explicitly thwarts static analysis |
 
 ## Sub-labels
 
